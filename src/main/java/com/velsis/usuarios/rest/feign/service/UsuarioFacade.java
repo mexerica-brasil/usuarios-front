@@ -16,6 +16,13 @@ import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.slf4j.Slf4jLogger;
 
+/**
+ * 
+ * UsuarioFacade
+ * 
+ * Configurações para chamadas do client Feign que chama API
+ * 
+ */
 public class UsuarioFacade {
 
     private static final ObjectMapper OBJECT_MAPPER;
@@ -36,7 +43,7 @@ public class UsuarioFacade {
 				                        .encoder(new JacksonEncoder(OBJECT_MAPPER))
 				                        .decoder(new JacksonDecoder(OBJECT_MAPPER))
                                         .logger(new Slf4jLogger())
-                                        .logLevel(Logger.Level.FULL)
+                                        .logLevel(Logger.Level.BASIC)
 				                        .options(new Request.Options(120, TimeUnit.SECONDS, 420, TimeUnit.SECONDS, true))
 				                        .errorDecoder(new CustomErrorDecoder(OBJECT_MAPPER))
                                         .target(UsuariosClient.class, FeignUtil.getURLBASELPI());

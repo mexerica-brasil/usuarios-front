@@ -4,6 +4,13 @@ import com.velsis.usuarios.client.bean.BeanApplication;
 
 import feign.okhttp.OkHttpClient;
 
+/**
+ * 
+ * FeignUtil
+ * 
+ * Auxiliar na configuração do client Feign que chama a API
+ * 
+ */
 public class FeignUtil {
 	
 	private FeignUtil() {

@@ -14,6 +14,13 @@ import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
 
+/**
+ * 
+ * BeanLabel
+ * 
+ * Auxliar na obtenção de valores (mensagens) do sistema, labels que estão no arquivo labels
+ * 
+ */
 @Named 
 @ApplicationScoped 
 public class BeanLabel {

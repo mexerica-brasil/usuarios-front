@@ -11,6 +11,14 @@ import feign.FeignException;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 
+/**
+ * 
+ * CustomErrorDecoder
+ * 
+ * Interceptar as exceções da API e dipara uma exceção para a aplicação
+ * 
+ * 
+ */
 public class CustomErrorDecoder implements ErrorDecoder {
 
 	private final ObjectMapper mapper;
@@ -35,25 +43,4 @@ public class CustomErrorDecoder implements ErrorDecoder {
             return FeignException.errorStatus(methodKey, response);
 		}
     }
-
-	/* 
-    @Override
-    public Exception decode(String s, Response response) {
-		Problem exceptionMessage = null;
-	   try (InputStream responseBodyIs = response.body().asInputStream()) {
-            String erro = new String(
-                responseBodyIs.readAllBytes(),
-                StandardCharsets.UTF_8
-            );
-
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.registerModule(new JavaTimeModule());
-
-            exceptionMessage = mapper.readValue(erro, Problem.class);
-	    } catch (IOException _) {
-	    	return errorDecoder.decode(s, response);
-	    }
-
-	    return new UsuarioAPIException(exceptionMessage);
-    }*/
 }

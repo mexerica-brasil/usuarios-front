@@ -8,6 +8,13 @@ import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
 
+/**
+ * 
+ * UsuariosClient
+ * 
+ * Interface para fazer as chamadas aos serviços da API Usuarios
+ * 
+ */
 @Headers({
   "Accept: application/json",
 	"Content-Type: application/json"

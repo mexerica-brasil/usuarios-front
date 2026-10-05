@@ -34,7 +34,7 @@
     </Appenders>
 
     <Loggers>
-        <Logger name="com.velsis.usuarios.rest.feign.client" level="DEBUG" additivity="false">
+        <Logger name="com.velsis.usuarios.rest.feign.client" level="INFO" additivity="false">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="FeignFile"/>
         </Logger>

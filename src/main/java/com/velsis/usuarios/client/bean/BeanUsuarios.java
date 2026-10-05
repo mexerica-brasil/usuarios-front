@@ -14,6 +14,14 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 
+/**
+ * 
+ * BeanUsuarios
+ * 
+ * Controller da página de gerenciamento de usuários
+ * 
+ * 
+ */
 @Named 
 @ViewScoped 
 public class BeanUsuarios implements Serializable {
