@@ -42,7 +42,7 @@
 						
 						<p:dataTable id="dtUsuarios" widgetVar="varUsuarios" var="usuario" value="#{beanUsuarios.usuarios}"
 							reflow="true" styleClass="products-table" 
-							rowKey="#{usuario.id}" paginator="true" rows="8" selectionRowMode="add" paginatorPosition="bottom">
+							rowKey="#{usuario.id}" paginator="true" rows="7" selectionRowMode="add" paginatorPosition="bottom">
 							<f:facet name="header">
 								<div class="products-table-header">
 									<table style="width: 100%; border: none;">
@@ -71,7 +71,14 @@
 							<p:column headerText="#{label.cpf}" sortBy="#{usuario.cpf}" filterBy="#{usuario.cpf}">
 								<h:outputText value="#{usuario.cpf}" converter="cpfConverter"/>
 							</p:column>
-							
+							<p:column exportable="false" ariaHeaderText="#{label.acoes}">
+								<p:commandButton icon="pi pi-pencil" update="@([id$=manage-usuario-content])"
+									oncomplete="PF('varDialogUsuario').show()"
+									styleClass="edit-button rounded-button ui-button-success" process="@this">
+									<f:setPropertyActionListener value="#{usuario}" target="#{beanUsuarios.selectedUsuario}" />
+									<p:resetInput target=":dialogs:manage-usuario-content" />
+								</p:commandButton>
+							</p:column>
 						</p:dataTable>			
 					</div>
 				</div>

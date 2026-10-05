@@ -48,24 +48,27 @@ public class BeanUsuarios implements Serializable {
     }
 
     public void salvar() {
-        if (this.selectedUsuario.getId() == null) {
-            try {
+        try {
+            if (this.selectedUsuario.getId() == null) {
                 UsuarioFacade.getClient().criar(this.selectedUsuario);
                 FacesContext.getCurrentInstance().addMessage(null, 
                     new FacesMessage(BeanLabel.getInstanciaBean().getPropriedadeComArgumentos(
                                                                                         "usuario.adicionado.sucesso", 
                                                                                                 this.selectedUsuario.getNome())));
-
                 this.usuarios = UsuarioFacade.getClient().listar();
                 PrimeFaces.current().executeScript("PF('varDialogUsuario').hide()");
-            } catch (UsuarioAPIException e) {
+            } else {
+                UsuarioFacade.getClient().atualizar(this.selectedUsuario);
                 FacesContext.getCurrentInstance().addMessage(null, 
+                    new FacesMessage(BeanLabel.getInstanciaBean().getPropriedadeComArgumentos(
+                                                                                        "usuario.alterado.sucesso", 
+                                                                                                this.selectedUsuario.getNome())));
+                 PrimeFaces.current().executeScript("PF('varDialogUsuario').hide()");                                                                                
+            }    
+        } catch (UsuarioAPIException e) {
+            FacesContext.getCurrentInstance().addMessage(null, 
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getProblem().getUserMessage(), e.getProblem().getDetail()));
-            } 
-            
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuário atualizado"));
-        }
+        } 
         
         PrimeFaces.current().ajax().update("form:globalMessage", "form:dtUsuarios");
     }
