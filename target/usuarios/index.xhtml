@@ -5,18 +5,157 @@
       xmlns:faces="jakarta.faces"
       xmlns:ui="jakarta.faces.facelets"
       xmlns:p="primefaces"
-	  lang="pt_BR">
+	  lang="pt">
 
 	<f:view>
-	<h:head>
-		<title>JSF - Myfaces Example</title>
-	</h:head>
-	<h:body>
-		<h:outputText value="#{hello.greeting}"/>
-		<p:spinner /><p:badge value="2"></p:badge>
-	</h:body>
-	</f:view>
-	
-	
+		<h:head>
+			<title>JSF - Myfaces Example</title>
+			<link rel="stylesheet" type="text/css" href="css/detail.css"/>
+		</h:head>
 
+		<f:metadata>
+			<f:event listener="#{beanUsuarios.preRenderView()}" type="preRenderView"/>
+		</f:metadata>
+			
+		<h:body>
+			<h:form id="form">
+				<p:growl id="globalMessage" widgetVar="w_globalMessage" globalOnly="true" autoUpdate="true" closable="true"/>
+				
+
+				<div class="page-container">
+					<div class="page-header">
+						<div>
+							<h1 class="page-title">#{label.gerencia}</h1>
+						</div>
+					</div>
+
+					<div class="card">
+						<p:toolbar>
+            				<p:toolbarGroup>
+								<p:commandButton value="#{label.incluir}" icon="pi pi-plus" actionListener="#{beanUsuarios.incluir}"
+									update=":dialogs:manage-usuario-content" oncomplete="PF('varDialogUsuario').show()"
+									styleClass="ui-button-success" style="margin-right: .5rem">
+									<p:resetInput target=":dialogs:manage-usuario-content" />
+								</p:commandButton>
+							</p:toolbarGroup>	
+						</p:toolbar>
+						
+						<p:dataTable id="dtUsuarios" widgetVar="varUsuarios" var="usuario" value="#{beanUsuarios.usuarios}"
+							reflow="true" styleClass="products-table" 
+							rowKey="#{usuario.id}" paginator="true" rows="10" selectionRowMode="add" paginatorPosition="bottom">
+							<f:facet name="header">
+								<div class="products-table-header">
+									<table style="width: 100%; border: none;">
+        								<tr>
+            								<td style="text-align: left; border: none;">
+												<span style="font-weight: bold">#{label.usuarios}</span>
+											</td>
+											 <td style="text-align: right; border: none;">
+												<span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i>
+													<p:inputText id="globalFilter" onkeyup="PrimeFaces.debounce(() => PF('varUsuarios').filter())" placeholder="#{label.pesquisa}" />
+												</span>
+											 </td>	 
+										</tr>
+									</table>
+								</div>
+							</f:facet>
+							<p:column headerText="#{label.codigo}" sortBy="#{usuario.id}" filterBy="#{usuario.id}">
+								<h:outputText value="#{usuario.id}" />
+							</p:column>
+							<p:column headerText="#{label.nome}" sortBy="#{usuario.nome}" filterBy="#{usuario.nome}">
+								<h:outputText value="#{usuario.nome}" />
+							</p:column>
+							<p:column headerText="#{label.dataNascimento}" sortBy="#{usuario.dataNascimento}" filterBy="#{usuario.dataNascimento}">
+								<h:outputText value="#{usuario.dataNascimentoFormatada}" />
+							</p:column>
+							<p:column headerText="#{label.cpf}" sortBy="#{usuario.cpf}" filterBy="#{usuario.cpf}">
+								<h:outputText value="#{usuario.cpf}" converter="cpfConverter"/>
+							</p:column>
+							
+						</p:dataTable>			
+					</div>
+				</div>
+
+			</h:form>
+
+			<h:form id="dialogs">
+				<p:dialog header="#{label.usuariosDetalhes}" showEffect="fade" modal="true" widgetVar="varDialogUsuario"
+					responsive="true">
+					<p:outputPanel id="manage-usuario-content" class="ui-fluid">
+						<p:outputPanel rendered="#{not empty beanUsuarios.selectedUsuario}">
+							<div class="field">
+								<p:outputLabel for="codigo">#{label.codigo}</p:outputLabel>
+								<p:inputText id="codigo" value="#{beanUsuarios.selectedUsuario.id}" required="true" />
+							</div>
+							<div class="field">
+								<p:outputLabel for="nome">#{label.nome}</p:outputLabel>
+								<p:inputText id="nome" value="#{beanUsuarios.selectedUsuario.nome}" required="true" />
+							</div>
+							<div class="field">
+								<p:outputLabel for="dataNascimento">#{label.dataNascimento}</p:outputLabel>
+								<p:inputText id="dataNascimento" value="#{beanUsuarios.selectedUsuario.dataNascimento}" required="true" />
+							</div>
+							<div class="field">
+								<p:outputLabel for="cpf">#{label.cpf}</p:outputLabel>
+								<p:inputText id="cpf" value="#{beanUsuarios.selectedUsuario.cpf}" required="true" />
+							</div>
+
+							<p:divider>
+								<span style="font-weight: 600;">
+									Endereço
+								</span>
+							</p:divider>
+
+							<div class="field col">
+									<div class="field">
+										<p:outputLabel for="logradouro">#{label.logradouro}</p:outputLabel>
+										<p:inputText id="logradouro" value="#{beanUsuarios.selectedUsuario.endereco.logradouro}" required="true" />
+									</div>
+								</div>
+
+							<div class="formgrid grid">
+								<div class="field col">
+									<div class="field">
+										<p:outputLabel for="numero">#{label.numero}</p:outputLabel>
+										<p:inputText id="numero" value="#{beanUsuarios.selectedUsuario.endereco.numero}" required="true" />
+									</div>
+								</div>
+								<div class="field col">
+									<div class="field">
+										<p:outputLabel for="cep">#{label.cep}</p:outputLabel>
+										<p:inputText id="cep" value="#{beanUsuarios.selectedUsuario.endereco.cep}" required="true" />
+									</div>
+								</div>
+							</div>
+							
+							<div class="formgrid grid">
+								<div class="field col">
+									<div class="field">
+										<p:outputLabel for="cidade">#{label.cidade}</p:outputLabel>
+										<p:inputText id="cidade" value="#{beanUsuarios.selectedUsuario.endereco.cidade}" required="true" />
+									</div>
+								</div>
+								<div class="field col">
+									<div class="field">
+										<p:outputLabel for="uf">#{label.uf}</p:outputLabel>
+										<p:inputText id="uf" value="#{beanUsuarios.selectedUsuario.endereco.uf}" required="true" />
+									</div>
+								</div>
+							</div>
+							
+
+							
+						</p:outputPanel>
+					</p:outputPanel>
+					<f:facet name="footer">
+						<p:commandButton value="#{label.salvar}" icon="pi pi-check" actionListener="#{beanUsuarios.salvar}"
+							update="manage-usuarios-content" process="manage-usuarios-content @this" />
+						<p:commandButton value="#{label.cancelar}" icon="pi pi-times" onclick="PF('varDialogUsuario').hide()"
+							class="ui-button-secondary" type="button" />
+					</f:facet>
+				</p:dialog>
+			</h:form>	
+
+		</h:body>
+	</f:view>
 </html>

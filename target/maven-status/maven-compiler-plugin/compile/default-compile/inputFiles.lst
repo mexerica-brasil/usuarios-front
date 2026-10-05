@@ -1,1 +1,12 @@
 /Volumes/Development/code/java/velsis/usuarios-front/src/main/java/com/velsis/HelloManagedBean.java
+/Volumes/Development/code/java/velsis/usuarios-front/src/main/java/com/velsis/usuarios/client/bean/BeanApplication.java
+/Volumes/Development/code/java/velsis/usuarios-front/src/main/java/com/velsis/usuarios/client/bean/BeanLabel.java
+/Volumes/Development/code/java/velsis/usuarios-front/src/main/java/com/velsis/usuarios/client/bean/BeanUsuarios.java
+/Volumes/Development/code/java/velsis/usuarios-front/src/main/java/com/velsis/usuarios/converter/CpfConverter.java
+/Volumes/Development/code/java/velsis/usuarios-front/src/main/java/com/velsis/usuarios/rest/feign/client/UsuariosClient.java
+/Volumes/Development/code/java/velsis/usuarios-front/src/main/java/com/velsis/usuarios/rest/feign/constants/Constants.java
+/Volumes/Development/code/java/velsis/usuarios-front/src/main/java/com/velsis/usuarios/rest/feign/entity/Endereco.java
+/Volumes/Development/code/java/velsis/usuarios-front/src/main/java/com/velsis/usuarios/rest/feign/entity/Usuario.java
+/Volumes/Development/code/java/velsis/usuarios-front/src/main/java/com/velsis/usuarios/rest/feign/service/UsuarioFacade.java
+/Volumes/Development/code/java/velsis/usuarios-front/src/main/java/com/velsis/usuarios/rest/feign/util/FeignUtil.java
+/Volumes/Development/code/java/velsis/usuarios-front/src/main/java/com/velsis/usuarios/util/JSFUtil.java
