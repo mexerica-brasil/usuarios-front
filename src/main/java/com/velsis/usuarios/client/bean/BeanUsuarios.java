@@ -50,12 +50,12 @@ public class BeanUsuarios implements Serializable {
     public void salvar() {
         try {
             if (this.selectedUsuario.getId() == null) {
-                UsuarioFacade.getClient().criar(this.selectedUsuario);
+                this.selectedUsuario = UsuarioFacade.getClient().criar(this.selectedUsuario);
                 FacesContext.getCurrentInstance().addMessage(null, 
                     new FacesMessage(BeanLabel.getInstanciaBean().getPropriedadeComArgumentos(
                                                                                         "usuario.adicionado.sucesso", 
                                                                                                 this.selectedUsuario.getNome())));
-                this.usuarios = UsuarioFacade.getClient().listar();
+                this.usuarios.add(this.selectedUsuario);
                 PrimeFaces.current().executeScript("PF('varDialogUsuario').hide()");
             } else {
                 UsuarioFacade.getClient().atualizar(this.selectedUsuario);
@@ -65,6 +65,26 @@ public class BeanUsuarios implements Serializable {
                                                                                                 this.selectedUsuario.getNome())));
                  PrimeFaces.current().executeScript("PF('varDialogUsuario').hide()");                                                                                
             }    
+        } catch (UsuarioAPIException e) {
+            FacesContext.getCurrentInstance().addMessage(null, 
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getProblem().getUserMessage(), e.getProblem().getDetail()));
+        } 
+        
+        PrimeFaces.current().ajax().update("form:globalMessage", "form:dtUsuarios");
+    }
+
+    public void excluir() {
+        try {
+            if (this.selectedUsuario.getId() != null) {
+                UsuarioFacade.getClient().excluir(this.selectedUsuario.getId());
+                FacesContext.getCurrentInstance().addMessage(null, 
+                    new FacesMessage(BeanLabel.getInstanciaBean().getPropriedadeComArgumentos(
+                                                                                        "usuario.excluido.sucesso", 
+                                                                                                this.selectedUsuario.getNome())));
+                this.getUsuarios().remove(this.selectedUsuario);
+                this.selectedUsuario = null;
+                PrimeFaces.current().executeScript("PF('varDialogUsuario').hide()");
+            } 
         } catch (UsuarioAPIException e) {
             FacesContext.getCurrentInstance().addMessage(null, 
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getProblem().getUserMessage(), e.getProblem().getDetail()));

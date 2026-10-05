@@ -9,7 +9,7 @@
 
 	<f:view>
 		<h:head>
-			<title>JSF - Myfaces Example</title>
+			<title>#{label.gerencia}</title>
 			<link rel="stylesheet" type="text/css" href="css/detail.css"/>
 		</h:head>
 
@@ -21,7 +21,6 @@
 			<h:form id="form">
 				<p:growl id="globalMessage" widgetVar="w_globalMessage" globalOnly="true" autoUpdate="true" closable="true"/>
 				
-
 				<div class="page-container">
 					<div class="page-header">
 						<div>
@@ -42,7 +41,7 @@
 						
 						<p:dataTable id="dtUsuarios" widgetVar="varUsuarios" var="usuario" value="#{beanUsuarios.usuarios}"
 							reflow="true" styleClass="products-table" 
-							rowKey="#{usuario.id}" paginator="true" rows="7" selectionRowMode="add" paginatorPosition="bottom">
+							rowKey="#{usuario.id}" paginator="true" rows="20" selectionRowMode="add" paginatorPosition="bottom">
 							<f:facet name="header">
 								<div class="products-table-header">
 									<table style="width: 100%; border: none;">
@@ -59,24 +58,28 @@
 									</table>
 								</div>
 							</f:facet>
-							<p:column headerText="#{label.codigo}" sortBy="#{usuario.id}" filterBy="#{usuario.id}">
+							<p:column headerText="#{label.codigo}" sortBy="#{usuario.id}" filterBy="#{usuario.id}" style="width: 100px !important; text-align: center; white-space: nowrap;">
 								<h:outputText value="#{usuario.id}" />
 							</p:column>
-							<p:column headerText="#{label.nome}" sortBy="#{usuario.nome}" filterBy="#{usuario.nome}">
+							<p:column headerText="#{label.nome}" sortBy="#{usuario.nome}" filterBy="#{usuario.nome}" width="500">
 								<h:outputText value="#{usuario.nome}" />
 							</p:column>
-							<p:column headerText="#{label.dataNascimento}" sortBy="#{usuario.dataNascimento}" filterBy="#{usuario.dataNascimento}">
+							<p:column headerText="#{label.dataNascimento}" sortBy="#{usuario.dataNascimento}" filterBy="#{usuario.dataNascimento}" style="text-align: center; white-space: nowrap;">
 								<h:outputText value="#{usuario.dataNascimentoFormatada}" />
 							</p:column>
-							<p:column headerText="#{label.cpf}" sortBy="#{usuario.cpf}" filterBy="#{usuario.cpf}">
+							<p:column headerText="#{label.cpf}" sortBy="#{usuario.cpf}" filterBy="#{usuario.cpf}" style="text-align: center; white-space: nowrap;">
 								<h:outputText value="#{usuario.cpf}" converter="cpfConverter"/>
 							</p:column>
-							<p:column exportable="false" ariaHeaderText="#{label.acoes}">
+							<p:column exportable="false" ariaHeaderText="#{label.acoes}" style="width: 80px !important; text-align: center; white-space: nowrap;">
 								<p:commandButton icon="pi pi-pencil" update="@([id$=manage-usuario-content])"
 									oncomplete="PF('varDialogUsuario').show()"
 									styleClass="edit-button rounded-button ui-button-success" process="@this">
 									<f:setPropertyActionListener value="#{usuario}" target="#{beanUsuarios.selectedUsuario}" />
 									<p:resetInput target=":dialogs:manage-usuario-content" />
+								</p:commandButton>
+								<p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
+									process="@this" oncomplete="PF('deleteUsuarioDialog').show()">
+									<f:setPropertyActionListener value="#{usuario}" target="#{beanUsuarios.selectedUsuario}" />
 								</p:commandButton>
 							</p:column>
 						</p:dataTable>			
@@ -172,6 +175,19 @@
 							class="ui-button-secondary" type="button" />
 					</f:facet>
 				</p:dialog>
+
+				<p:confirmDialog widgetVar="deleteUsuarioDialog" showEffect="fade" width="300"
+            		message="#{label.excluiUsuario}" header="#{label.confirme}" severity="warn">
+            		<p:commandButton value="#{label.sim}" icon="pi pi-check" actionListener="#{beanUsuarios.excluir}"
+                		process="@this" oncomplete="PF('deleteUsuarioDialog').hide()" />
+            		<p:commandButton value="#{label.nao}" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                		onclick="PF('deleteUsuarioDialog').hide()" />
+        		</p:confirmDialog>
+        		<p:confirmDialog global="true" showEffect="fade" width="300">
+            		<p:commandButton value="#{label.sim}" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+            		<p:commandButton value="#{label.nao}" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
+                		icon="pi pi-times" />
+        		</p:confirmDialog>
 			</h:form>	
 
 		</h:body>

@@ -1,5 +1,6 @@
 package com.velsis.usuarios.rest.feign.entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
@@ -16,7 +17,7 @@ import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 
 
-public class Usuario {
+public class Usuario implements  Serializable {
 
     private Integer id;
 

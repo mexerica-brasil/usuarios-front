@@ -1,5 +1,6 @@
 package com.velsis.usuarios.rest.feign.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import com.velsis.usuarios.rest.feign.constants.Constants;
@@ -8,7 +9,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public class Endereco {
+public class Endereco implements Serializable {
 
     private Integer id;
 
