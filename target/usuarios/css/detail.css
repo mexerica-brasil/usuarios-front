@@ -514,7 +514,11 @@ select:focus {
     color: var(--danger);
 }
 
-
+.align-top-bottom {
+    display: flex; 
+    flex-direction: column; 
+    align-items: flex-start;
+}
 /* ============================================================
    RESPONSIVIDADE
    ============================================================ */

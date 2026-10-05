@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.velsis.usuarios.rest.feign.constants.Constants;
 
 import jakarta.validation.Valid;
@@ -22,7 +23,7 @@ public class Usuario {
     @CPF 
     @NotNull 
     @NotBlank 
-    @Size (min = 11, max = 11)
+    //@Size (min = 14, max = 14)
     private String cpf;
 
     @NotNull
@@ -35,7 +36,7 @@ public class Usuario {
     private LocalDate dataNascimento;
 
     @Valid 
-    private Endereco endereco;
+    private Endereco endereco = new Endereco();
 
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
@@ -52,6 +53,7 @@ public class Usuario {
     public Endereco getEndereco() { return endereco; }
     public void setEndereco(Endereco endereco) { this.endereco = endereco; }
 
+    @JsonIgnore 
     public String getDataNascimentoFormatada() {
         if (dataNascimento == null) {
             return "";

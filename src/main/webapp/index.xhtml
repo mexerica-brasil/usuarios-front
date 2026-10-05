@@ -42,7 +42,7 @@
 						
 						<p:dataTable id="dtUsuarios" widgetVar="varUsuarios" var="usuario" value="#{beanUsuarios.usuarios}"
 							reflow="true" styleClass="products-table" 
-							rowKey="#{usuario.id}" paginator="true" rows="10" selectionRowMode="add" paginatorPosition="bottom">
+							rowKey="#{usuario.id}" paginator="true" rows="8" selectionRowMode="add" paginatorPosition="bottom">
 							<f:facet name="header">
 								<div class="products-table-header">
 									<table style="width: 100%; border: none;">
@@ -79,77 +79,88 @@
 			</h:form>
 
 			<h:form id="dialogs">
-				<p:dialog header="#{label.usuariosDetalhes}" showEffect="fade" modal="true" widgetVar="varDialogUsuario"
+				<p:dialog id = "detail" header="#{label.usuariosDetalhes}" showEffect="fade" modal="true" widgetVar="varDialogUsuario"
 					responsive="true">
-					<p:outputPanel id="manage-usuario-content" class="ui-fluid">
+					<p:outputPanel id="manage-usuario-content">
 						<p:outputPanel rendered="#{not empty beanUsuarios.selectedUsuario}">
-							<div class="field">
+							<div class="field" style="display: flex; flex-direction: column; align-items: flex-start;">
 								<p:outputLabel for="codigo">#{label.codigo}</p:outputLabel>
-								<p:inputText id="codigo" value="#{beanUsuarios.selectedUsuario.id}" required="true" />
+								<p:inputText id="codigo" value="#{beanUsuarios.selectedUsuario.id}" readonly="true" maxlength="3" size="10"/>
 							</div>
-							<div class="field">
+							<div class="field" style="display: flex; flex-direction: column; align-items: flex-start;">
 								<p:outputLabel for="nome">#{label.nome}</p:outputLabel>
-								<p:inputText id="nome" value="#{beanUsuarios.selectedUsuario.nome}" required="true" />
+								<p:inputText id="nome" value="#{beanUsuarios.selectedUsuario.nome}" maxlength="100" size="46" label="#{label.nome}">
+									<p:keyFilter regEx="/[a-zA-Z\s]/"/>
+								</p:inputText>
+								<p:message for="nome" display="text"/>
 							</div>
-							<div class="field">
+							<div class="field" style="display: flex; flex-direction: column; align-items: flex-start;">
 								<p:outputLabel for="dataNascimento">#{label.dataNascimento}</p:outputLabel>
-								<p:inputText id="dataNascimento" value="#{beanUsuarios.selectedUsuario.dataNascimento}" required="true" />
+								<p:calendar id="dataNascimento" value="#{beanUsuarios.selectedUsuario.dataNascimento}"
+									mode="popup" pattern="dd/MM/yyyy" locale="pt_BR"
+									navigator="true" showButtonPanel="true" showOn="button" mask="true"
+									readonlyInput="true" size="14"
+									autocomplete="off" styleClass="Fleft" label="#{label.dataNascimento}">
+								</p:calendar>
+								<p:message for="dataNascimento" display="text"/> 
 							</div>
-							<div class="field">
+							<div class="field" style="display: flex; flex-direction: column; align-items: flex-start;">
 								<p:outputLabel for="cpf">#{label.cpf}</p:outputLabel>
-								<p:inputText id="cpf" value="#{beanUsuarios.selectedUsuario.cpf}" required="true" />
+								<p:inputMask id="cpf" value="#{beanUsuarios.selectedUsuario.cpf}" mask="999.999.999-99"
+									maxlength="14" size="14" label="#{label.cpf}" converter="cpfConverter"/>
+								<p:message for="cpf" display="text"/>
 							</div>
-
 							<p:divider>
-								<span style="font-weight: 600;">
-									Endereço
-								</span>
+								<span style="font-weight: 600;">#{label.endereco}</span>
 							</p:divider>
-
-							<div class="field col">
-									<div class="field">
-										<p:outputLabel for="logradouro">#{label.logradouro}</p:outputLabel>
-										<p:inputText id="logradouro" value="#{beanUsuarios.selectedUsuario.endereco.logradouro}" required="true" />
-									</div>
-								</div>
-
-							<div class="formgrid grid">
-								<div class="field col">
-									<div class="field">
+							<div class="field" style="display: flex; flex-direction: column; align-items: flex-start;">
+								<p:outputLabel for="logradouro">#{label.logradouro}</p:outputLabel>
+								<p:inputText id="logradouro" value="#{beanUsuarios.selectedUsuario.endereco.logradouro}" 
+									maxlength="200" size="46" label="#{label.logradouro}">
+									<p:keyFilter regEx="/[a-zA-Z\s]/"/>
+								</p:inputText>
+								<p:message for="logradouro" display="text"/>
+							</div>
+							<div style="display: flex; align-items: flex-start; gap: 110px;">
+								<div class="field" style="display: flex; flex-direction: column; align-items: flex-start;">
 										<p:outputLabel for="numero">#{label.numero}</p:outputLabel>
-										<p:inputText id="numero" value="#{beanUsuarios.selectedUsuario.endereco.numero}" required="true" />
-									</div>
+										<p:inputText id="numero" value="#{beanUsuarios.selectedUsuario.endereco.numero}" label="#{label.numero}"
+											maxlength="6" size="14">
+											<p:keyFilter regEx="/[0-9]/"/>
+										</p:inputText>
+										<p:message for="numero" display="text"/>	
 								</div>
-								<div class="field col">
-									<div class="field">
+								<div class="field" style="display: flex; flex-direction: column; align-items: flex-start;">
 										<p:outputLabel for="cep">#{label.cep}</p:outputLabel>
-										<p:inputText id="cep" value="#{beanUsuarios.selectedUsuario.endereco.cep}" required="true" />
-									</div>
+										<p:inputMask id="cep" value="#{beanUsuarios.selectedUsuario.endereco.cep}" mask="99999-999" 
+											maxlength="9" size="14" label="#{label.cep}"/>
+										<p:message for="cep" display="text"/>	
 								</div>
 							</div>
-							
-							<div class="formgrid grid">
-								<div class="field col">
-									<div class="field">
-										<p:outputLabel for="cidade">#{label.cidade}</p:outputLabel>
-										<p:inputText id="cidade" value="#{beanUsuarios.selectedUsuario.endereco.cidade}" required="true" />
-									</div>
+							<div style="display: flex; align-items: flex-start; gap: 110px;">
+								<div class="field" style="display: flex; flex-direction: column; align-items: flex-start;">
+									<p:outputLabel for="cidade">#{label.cidade}</p:outputLabel>
+									<p:inputText id="cidade" value="#{beanUsuarios.selectedUsuario.endereco.cidade}" label="#{label.cidade}"
+										maxlength="100" size="14">
+										<p:keyFilter regEx="/[a-zA-Z\s]/"/>
+									</p:inputText>
+									<p:message for="cidade" display="text"/>
 								</div>
-								<div class="field col">
-									<div class="field">
-										<p:outputLabel for="uf">#{label.uf}</p:outputLabel>
-										<p:inputText id="uf" value="#{beanUsuarios.selectedUsuario.endereco.uf}" required="true" />
-									</div>
+								
+								<div class="field" style="display: flex; flex-direction: column; align-items: flex-start;">
+									<p:outputLabel for="uf">#{label.uf}</p:outputLabel>
+									<p:inputText id="uf" value="#{beanUsuarios.selectedUsuario.endereco.uf}" label="#{label.uf}"
+										maxlength="2" size="14">
+										<p:keyFilter regEx="/[A-Z]/"/>
+									</p:inputText>
+									<p:message for="uf" display="text"/>
 								</div>
 							</div>
-							
-
-							
-						</p:outputPanel>
-					</p:outputPanel>
+						</p:outputPanel>	
+					</p:outputPanel>	
 					<f:facet name="footer">
 						<p:commandButton value="#{label.salvar}" icon="pi pi-check" actionListener="#{beanUsuarios.salvar}"
-							update="manage-usuarios-content" process="manage-usuarios-content @this" />
+							update="@([id$=manage-usuario-content])" process="@([id$=manage-usuario-content]) @this"/>
 						<p:commandButton value="#{label.cancelar}" icon="pi pi-times" onclick="PF('varDialogUsuario').hide()"
 							class="ui-button-secondary" type="button" />
 					</f:facet>

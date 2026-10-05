@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.velsis.usuarios.rest.feign.client.UsuariosClient;
+import com.velsis.usuarios.rest.feign.exception.CustomErrorDecoder;
 import com.velsis.usuarios.rest.feign.util.FeignUtil;
 
 import feign.Feign;
@@ -37,6 +38,7 @@ public class UsuarioFacade {
                                         .logger(new Slf4jLogger())
                                         .logLevel(Logger.Level.FULL)
 				                        .options(new Request.Options(120, TimeUnit.SECONDS, 420, TimeUnit.SECONDS, true))
-				                        .target(UsuariosClient.class, FeignUtil.getURLBASELPI());
+				                        .errorDecoder(new CustomErrorDecoder(OBJECT_MAPPER))
+                                        .target(UsuariosClient.class, FeignUtil.getURLBASELPI());
 	}
 }

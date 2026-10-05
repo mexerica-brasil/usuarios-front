@@ -6,6 +6,7 @@ import java.util.List;
 import org.primefaces.PrimeFaces;
 
 import com.velsis.usuarios.rest.feign.entity.Usuario;
+import com.velsis.usuarios.rest.feign.exception.UsuarioAPIException;
 import com.velsis.usuarios.rest.feign.service.UsuarioFacade;
 
 import jakarta.faces.application.FacesMessage;
@@ -48,13 +49,25 @@ public class BeanUsuarios implements Serializable {
 
     public void salvar() {
         if (this.selectedUsuario.getId() == null) {
-            this.usuarios.add(this.selectedUsuario);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuário adicionado"));
+            try {
+                UsuarioFacade.getClient().criar(this.selectedUsuario);
+                FacesContext.getCurrentInstance().addMessage(null, 
+                    new FacesMessage(BeanLabel.getInstanciaBean().getPropriedadeComArgumentos(
+                                                                                        "usuario.adicionado.sucesso", 
+                                                                                                this.selectedUsuario.getNome())));
+
+                this.usuarios = UsuarioFacade.getClient().listar();
+                PrimeFaces.current().executeScript("PF('varDialogUsuario').hide()");
+            } catch (UsuarioAPIException e) {
+                FacesContext.getCurrentInstance().addMessage(null, 
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getProblem().getUserMessage(), e.getProblem().getDetail()));
+            } 
+            
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuário atualizado"));
         }
-        PrimeFaces.current().executeScript("PF('varDialogUsuario').hide()");
-        PrimeFaces.current().ajax().update("form:messages", "form:dt-usuarios");
+        
+        PrimeFaces.current().ajax().update("form:globalMessage", "form:dtUsuarios");
     }
         
 }

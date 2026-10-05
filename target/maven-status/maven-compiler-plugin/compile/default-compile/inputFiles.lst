@@ -7,6 +7,9 @@
 /Volumes/Development/code/java/velsis/usuarios-front/src/main/java/com/velsis/usuarios/rest/feign/constants/Constants.java
 /Volumes/Development/code/java/velsis/usuarios-front/src/main/java/com/velsis/usuarios/rest/feign/entity/Endereco.java
 /Volumes/Development/code/java/velsis/usuarios-front/src/main/java/com/velsis/usuarios/rest/feign/entity/Usuario.java
+/Volumes/Development/code/java/velsis/usuarios-front/src/main/java/com/velsis/usuarios/rest/feign/exception/CustomErrorDecoder.java
+/Volumes/Development/code/java/velsis/usuarios-front/src/main/java/com/velsis/usuarios/rest/feign/exception/Problem.java
+/Volumes/Development/code/java/velsis/usuarios-front/src/main/java/com/velsis/usuarios/rest/feign/exception/UsuarioAPIException.java
 /Volumes/Development/code/java/velsis/usuarios-front/src/main/java/com/velsis/usuarios/rest/feign/service/UsuarioFacade.java
 /Volumes/Development/code/java/velsis/usuarios-front/src/main/java/com/velsis/usuarios/rest/feign/util/FeignUtil.java
 /Volumes/Development/code/java/velsis/usuarios-front/src/main/java/com/velsis/usuarios/util/JSFUtil.java
