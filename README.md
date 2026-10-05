@@ -60,10 +60,10 @@ A comunicação com os serviços de backend é realizada através de APIs REST u
 | CDI / Weld Servlet | 6.0.3.Final |
 | OpenFeign | 13.15 |
 | Lombok | 1.18.48 |
-| Log4j | 2.26.1 |
+| Slf4j | 13.15 |
 | JUnit | 4.13.1 |
 | Jackson Datatype JSR-310 | 3.0.0-rc2 |
-| Apache Tomcat | Compatível com a stack Jakarta utilizada |
+| Apache Tomcat | 26.7.0_3 |
 
 ## 📦 Requisitos
 
@@ -71,7 +71,7 @@ Para desenvolver e executar o projeto, são necessários:
 
 - JDK 25
 - Maven
-- Apache Tomcat compatível com Jakarta Servlet
+- Apache Tomcat compatível com Jakarta Servlet (26.7.0_3)
 - Git
 
 Verifique as versões instaladas:
@@ -172,10 +172,10 @@ Modelo conceitual:
 │ id            │
 │ cpf           │
 │ nome          │
-│ email         │
+│ dataNascimento│
 └───────┬───────┘
         │
-        │ 1:N
+        │ 1:1
         ▼
 ┌───────────────┐
 │   Endereço    │
@@ -184,11 +184,8 @@ Modelo conceitual:
 │ CEP           │
 │ logradouro    │
 │ número        │
-│ complemento   │
-│ bairro        │
 │ cidade        │
 │ UF            │
-│ tipo          │
 └───────────────┘
 ```
 
@@ -371,7 +368,7 @@ definido através de:
 
 **Artifact ID:** `usuarios-front`
 
-**Versão:** `1.0.0`
+**Versão:** `0.0.1`
 
 **Packaging:** `war`
 

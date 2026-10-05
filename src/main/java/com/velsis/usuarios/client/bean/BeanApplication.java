@@ -14,6 +14,13 @@ import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
 
+/**
+ * 
+ * BeanApplication
+ * 
+ * Auxiliar na obtenção de valores de configuração que são colocados no arquivo application
+ * 
+ */
 @Named 
 @ApplicationScoped 
 public class BeanApplication {
